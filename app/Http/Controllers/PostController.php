@@ -10,53 +10,44 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return view('posts', compact('posts'));
+        return view('posts.index', compact('posts'));
     }
     public function create()
     {
-        $postsArr = [
-            [
-                'title' => 'Title 1',
-                'description' => 'Description 1',
-                'image' => 'image1.png',
-                'likes' => 451,
-                'is_published' => 1
-            ],
-            [
-                'title' => 'Title 2',
-                'description' => 'Description 2',
-                'image' => 'image2.png',
-                'likes' => 452,
-                'is_published' => 1
-            ],
-            [
-                'title' => 'Title 3',
-                'description' => 'Description 3',
-                'image' => 'image3.png',
-                'likes' => 453,
-                'is_published' => 1
-            ],
-            [
-                'title' => 'Title 4',
-                'description' => 'Description 4',
-                'image' => 'image4.png',
-                'likes' => 454,
-                'is_published' => 1
-            ]
-        ];
-        foreach ($postsArr as $item) {
-            Post::create($item);
-        }
+        return view('posts.create');
     }
-    public function update()
+    public function store()
     {
-        $post = Post::find(3);
-        $post->update(['title'=>'2 post title']);
+        $data = request()->validate([
+            'title' => 'string',
+            'description' => 'string',
+            'image' => 'string',
+        ]);
+        Post::create($data);
+        return redirect()->route('posts.index');
     }
-    public function delete()
+    public function show(Post $post)
     {
-        $post = Post::find(1);
+        return view('posts.show', compact('post'));
+    }
+    public function edit(Post $post)
+    {
+        return view('posts.edit', compact('post'));
+    }
+    public function update(Post $post)
+    {
+        $data = request()->validate([
+            'title' => 'string',
+            'description' => 'string',
+            'image' => 'string',
+        ]);
+        $post->update($data);
+        return redirect()->route('posts.show', $post->id);
+    }
+    public function destroy(Post $post)
+    {
         $post->delete();
+        return redirect()->route('posts.index');
     }
     public function restore()
     {
