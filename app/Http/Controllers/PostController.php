@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -14,16 +16,25 @@ class PostController extends Controller
     }
     public function create()
     {
-        return view('posts.create');
+        $tags = Tag::all();
+        $categories = Category::all();
+        return view('posts.create', compact('tags', 'categories'));
     }
     public function store()
     {
         $data = request()->validate([
-            'title' => 'string',
-            'description' => 'string',
+            'title' => 'required|string',
+            'description' => 'required|string',
             'image' => 'string',
+            'is_published' => '',
+            'category_id' => '',
+            'tags' => ''
         ]);
-        Post::create($data);
+        $tags = $data['tags'];
+        unset($data['tags']);
+        dd($data);
+        $post = Post::create($data);
+        $post->tags()->withTimestamps()->attach($tags);
         return redirect()->route('posts.index');
     }
     public function show(Post $post)
@@ -32,7 +43,9 @@ class PostController extends Controller
     }
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+        $tags = Tag::all();
+        $categories = Category::all();
+        return view('posts.edit', compact('post', 'tags', 'categories'));
     }
     public function update(Post $post)
     {
@@ -40,8 +53,13 @@ class PostController extends Controller
             'title' => 'string',
             'description' => 'string',
             'image' => 'string',
+            'category_id' => '',
+            'tags' => ''
         ]);
+        $tags = $data['tags'];
+        unset($data['tags']);
         $post->update($data);
+        $post->tags()->withTimestamps()->sync($tags);
         return redirect()->route('posts.show', $post->id);
     }
     public function destroy(Post $post)
