@@ -32,7 +32,6 @@ class PostController extends Controller
         ]);
         $tags = $data['tags'];
         unset($data['tags']);
-        dd($data);
         $post = Post::create($data);
         $post->tags()->withTimestamps()->attach($tags);
         return redirect()->route('posts.index');
