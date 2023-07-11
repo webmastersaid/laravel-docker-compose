@@ -15,6 +15,6 @@ class UpdateController extends Controller
         unset($data['tags']);
         $post->update($data);
         $post->tags()->withTimestamps()->sync($tags);
-        return redirect()->route('posts.show', $post->id);
+        return redirect()->route('post.show', $post->id);
     }
 }

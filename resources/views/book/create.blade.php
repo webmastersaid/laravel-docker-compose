@@ -1,7 +1,7 @@
-@extends('templates.main')
+@extends('layouts.main')
 @section('content')
     <h1>Add book</h1>
-    <form action="{{ route('books.store') }}" method="post">
+    <form action="{{ route('book.store') }}" method="post">
         @csrf
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>

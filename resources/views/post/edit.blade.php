@@ -1,7 +1,7 @@
-@extends('templates.main')
+@extends('layouts.main')
 @section('content')
     <h1>Update post</h1>
-    <form action="{{ route('posts.update', $post->id) }}" method="post">
+    <form action="{{ route('post.update', $post->id) }}" method="post">
         @csrf
         @method('patch')
         <div class="mb-3">
@@ -45,7 +45,7 @@
         </div>
         <div class="mb-3">
             <button type="submit" class="btn btn-success">Save</button>
-            <a class="btn btn-secondary" href="{{ route('posts.show', $post->id) }}">Cancel</a>
+            <a class="btn btn-secondary" href="{{ route('post.show', $post->id) }}">Cancel</a>
         </div>
     </form>
 @endsection

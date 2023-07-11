@@ -1,4 +1,4 @@
-@extends('templates.main')
+@extends('layouts.main')
 @section('content')
     <div>
         <h1>{{ $post->title }}</h1>
@@ -13,14 +13,14 @@
         </p>
         <div class="d-flex mb-3">
             <div class="m-1">
-                <a class="btn btn-primary" href="{{ route('posts.edit', $post->id) }}">Edit</a>
+                <a class="btn btn-primary" href="{{ route('post.edit', $post->id) }}">Edit</a>
             </div>
-            <form class="m-1" action="{{ route('posts.destroy', $post->id) }}" method="post">
+            <form class="m-1" action="{{ route('post.destroy', $post->id) }}" method="post">
                 @csrf
                 @method('delete')
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
         </div>
-        <a href="{{ route('posts.index') }}">Go to posts</a>
+        <a href="{{ route('post.index') }}">Go to posts</a>
     </div>
 @endsection

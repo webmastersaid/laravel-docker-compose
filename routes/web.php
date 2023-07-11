@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
@@ -20,17 +21,32 @@ Route::get('/', function () {
 });
 //Route::resource('/posts', PostController::class);
 Route::group(['namespace' => 'App\Http\Controllers\Post'], function () {
-    Route::get('/posts', 'IndexController')->name('posts.index');
-    Route::get('/posts/create', 'CreateController')->name('posts.create');
-    Route::post('/posts', 'StoreController')->name('posts.store');
-    Route::get('/posts/{post}', 'ShowController')->name('posts.show');
-    Route::get('/posts/{post}/edit', 'EditController')->name('posts.edit');
-    Route::patch('/posts/{post}', 'UpdateController')->name('posts.update');
-    Route::delete('/posts/{post}', 'DestroyController')->name('posts.destroy');
+    Route::get('/posts', 'IndexController')->name('post.index');
+    Route::get('/posts/create', 'CreateController')->name('post.create');
+    Route::post('/posts', 'StoreController')->name('post.store');
+    Route::get('/posts/{post}', 'ShowController')->name('post.show');
+    Route::get('/posts/{post}/edit', 'EditController')->name('post.edit');
+    Route::patch('/posts/{post}', 'UpdateController')->name('post.update');
+    Route::delete('/posts/{post}', 'DestroyController')->name('post.destroy');
 });
+// Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin'], function () {
+//     Route::group(['namespace' => 'App\Http\Controllers\Admin\Post'], function () {
+//         Route::get('/post', 'IndexController')->name('admin.post.index');
+//     });
+// });
 Route::controller(PostController::class)->group(function () {
     Route::get('/posts/restore', 'restore');
     Route::get('posts/first_or_create', 'first_or_create');
     Route::get('/posts/update_or_create', 'update_or_create');
 });
-Route::resource('/books', BookController::class);
+// Route::resource('/books', BookController::class);
+Route::controller(BookController::class)->group(function () {
+    Route::get('/books', 'index')->name('book.index');
+    Route::get('/books/create', 'create')->name('book.create');
+    Route::post('/books', 'store')->name('book.store');
+    Route::get('/books/{book}', 'show')->name('book.show');
+    Route::get('/books/{book}/edit', 'edit')->name('book.edit');
+    Route::patch('/books/{book}', 'update')->name('book.update');
+    Route::delete('/books/{book}', 'destroy')->name('book.destroy');
+});
+Route::resource('/admin', AdminController::class);

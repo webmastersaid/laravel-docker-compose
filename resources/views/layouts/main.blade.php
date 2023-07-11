@@ -12,8 +12,8 @@
 
 <body>
     <nav class="nav">
-        <a class="nav-link" href="{{ route('books.index') }}">Books</a>
-        <a class="nav-link" href="{{ route('posts.index') }}">Posts</a>
+        <a class="nav-link" href="{{ route('book.index') }}">Books</a>
+        <a class="nav-link" href="{{ route('post.index') }}">Posts</a>
     </nav>
     <div class="container">
         @yield('content')
