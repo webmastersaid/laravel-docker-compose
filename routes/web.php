@@ -29,11 +29,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Post'], function () {
     Route::patch('/posts/{post}', 'UpdateController')->name('post.update');
     Route::delete('/posts/{post}', 'DestroyController')->name('post.destroy');
 });
-// Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin'], function () {
-//     Route::group(['namespace' => 'App\Http\Controllers\Admin\Post'], function () {
-//         Route::get('/post', 'IndexController')->name('admin.post.index');
-//     });
-// });
+
 Route::controller(PostController::class)->group(function () {
     Route::get('/posts/restore', 'restore');
     Route::get('posts/first_or_create', 'first_or_create');
