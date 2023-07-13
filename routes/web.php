@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,3 +51,7 @@ Route::controller(BookController::class)->group(function () {
     Route::patch('/books/{book}', 'update')->name('book.update');
     Route::delete('/books/{book}', 'destroy')->name('book.destroy');
 });
+
+Auth::routes();
+Route::redirect('/admin', '/home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
