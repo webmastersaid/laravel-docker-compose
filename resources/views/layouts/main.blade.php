@@ -12,9 +12,12 @@
 
 <body>
     <nav class="nav">
+        <a class="nav-link" href="{{ url('/') }}">Home</a>
         <a class="nav-link" href="{{ route('book.index') }}">Books</a>
         <a class="nav-link" href="{{ route('post.index') }}">Posts</a>
-        <a class="nav-link" href="{{ route('admin.post.index') }}">Admin</a>
+        @can('view', auth()->user())
+            <a class="nav-link" href="{{ route('admin.post.index') }}">Admin</a>
+        @endcan
     </nav>
     <div class="container">
         @yield('content')
