@@ -13,6 +13,7 @@ class Service
         unset($data['tags']);
         $post = Post::create($data);
         $post->tags()->withTimestamps()->attach($tags);
+        return $post;
     }
 
     public function update(Post $post, array $data)
@@ -21,6 +22,7 @@ class Service
         unset($data['tags']);
         $post->update($data);
         $post->tags()->withTimestamps()->sync($tags);
+        return $post->fresh();
     }
 
 }
