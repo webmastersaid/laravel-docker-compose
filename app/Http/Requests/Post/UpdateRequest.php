@@ -26,7 +26,9 @@ class UpdateRequest extends FormRequest
             'description' => 'string',
             'image' => 'string',
             'category_id' => '',
-            'tags' => ''
+            'category' => '',
+            'tags' => '',
+            'tags.*.title' => ''
         ];
     }
 }
